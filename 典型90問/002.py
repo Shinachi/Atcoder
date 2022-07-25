@@ -1,37 +1,38 @@
-def f(pro):
-    x = Counter(list(pro))
-    res = False
-    if len(x) == 2:
-        if x[1] == x[0]:
+def main():
+    def f(pro):
+        tmp = Counter(pro)
+        if len(tmp) == 2 and tmp[0]==tmp[1]:
             return True
-        
-    return res
 
-N = int(input())
-from itertools import product
-from collections import Counter
-from termios import N_PPP
 
-li = []
-for pro in product((0, 1), repeat=N):
-    if f(pro):
-        temp = ''
-        left, right = 0, 0
-        for i in range(N):
-            if pro[i]:
-                temp += '('
-                left += 1
-            else:
-                if left > right:
-                    right += 1
-                    temp += ')'
+    from itertools import product
+    from collections import Counter
+    N = int(input())
+
+    ans = []
+
+    for pro in product((0, 1), repeat=N):
+        if f(pro):
+            x = ''
+            l ,r = 0, 0
+            for i in pro:
+                if i:
+                    x += '('
+                    l += 1
                 else:
-                    break
-        if len(list(temp))!=N:
-            continue
-        li.append(temp)
+                    if l > r:
+                        x += ')'
+                        r += 1
+                    else:
+                        break
+            if len(list(x)) != N:
+                continue
+            ans.append(x)
+            
+    ans.sort()
 
-li.sort()
-
-for i in li:
-    print(i)
+    for i in ans:
+        print(i)
+        
+if __name__=='__main__':
+    main()
